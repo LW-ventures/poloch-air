@@ -1,7 +1,7 @@
 {
-  "name": "Poloch Air",
-  "short_name": "Poloch Air",
-  "description": "Die Fahrgemeinschafts-Airline: Flüge buchen, Boarding Pass abreißen, Spritgeld fair teilen.",
+  "name": "Polochrechner",
+  "short_name": "Polochrechner",
+  "description": "Spritgeld fair teilen – die Low-Cortisol-Fahrgemeinschaft.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="75%">
+      <stop offset="0" stop-color="#1d3866"/>
+      <stop offset="1" stop-color="#0b1830"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <circle cx="300" cy="214" r="122" fill="#ff7a3d"/>
+  <g stroke="rgba(255,255,255,0.35)" stroke-width="7" stroke-linecap="round">
+    <path d="M58 300 H150"/><path d="M84 336 H170"/><path d="M40 264 H118"/>
+  </g>
+  <g transform="translate(250 268) rotate(-9) scale(1.18) translate(-152 -40)">
+    <path d="M122 18 C104 -16 66 -50 18 -68 C34 -54 40 -46 44 -38 C30 -42 18 -42 6 -40 C26 -30 36 -24 44 -18 C32 -18 22 -14 12 -8 C30 -4 44 -2 58 0 C48 4 40 8 34 14 C64 16 94 18 122 18 Z" fill="#cfc4ab" transform="translate(14 -4) rotate(12 121 17)"/>
+    <path d="M18 92 L16 66 Q16 58 22 54 L36 28 Q40 20 52 19 L158 15 Q168 15 176 22 L214 54 L264 60 Q288 64 290 76 L290 92 L258 92 A23 23 0 0 0 212 92 L93 92 A23 23 0 0 0 47 92 Z" fill="#12161e" stroke="rgba(210,225,245,0.38)" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M70 26 L97 25 L97 52 L58 52 Z" fill="#2a3d58"/>
+    <path d="M103 24 L160 23 Q167 23 172 29 L199 52 L103 52 Z" fill="#2a3d58"/>
+    <path d="M108 27 L122 27 L110 50 L103 50 Z M74 29 L84 28 L72 50 L64 50 Z" fill="rgba(255,255,255,0.18)"/>
+    <path d="M54 22 L158 18 Q166 18 172 23" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M193 48 L203 45 L205 52 L196 53 Z" fill="#12161e" stroke="rgba(210,225,245,0.38)" stroke-width="1"/>
+    <path d="M272 64 L287 68 L287 74 L276 72 Z" fill="#ffe6a3"/>
+    <path d="M17 58 L26 54 L25 70 L16 71 Z" fill="#ff4d4d"/>
+    <circle cx="70" cy="92" r="19" fill="#0b0d11" stroke="#2b3038" stroke-width="2"/><circle cx="70" cy="92" r="10" fill="#a9b2bd"/><circle cx="70" cy="92" r="3" fill="#3a4049"/><circle cx="235" cy="92" r="19" fill="#0b0d11" stroke="#2b3038" stroke-width="2"/><circle cx="235" cy="92" r="10" fill="#a9b2bd"/><circle cx="235" cy="92" r="3" fill="#3a4049"/>
+    <g transform="rotate(20 121 17)">
+      <path d="M122 18 C104 -16 66 -50 18 -68 C34 -54 40 -46 44 -38 C30 -42 18 -42 6 -40 C26 -30 36 -24 44 -18 C32 -18 22 -14 12 -8 C30 -4 44 -2 58 0 C48 4 40 8 34 14 C64 16 94 18 122 18 Z" fill="#f8f1e2" stroke="rgba(24,34,58,0.35)" stroke-width="1.2"/>
+      <path d="M44 -38 C66 -26 92 -8 116 12 M44 -18 C70 -8 96 4 118 15 M58 0 C80 6 100 12 120 17" fill="none" stroke="rgba(24,34,58,0.28)" stroke-width="1.4" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>

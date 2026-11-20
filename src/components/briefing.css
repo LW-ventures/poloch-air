@@ -1,0 +1,103 @@
+/* Sicherheitseinweisung – sieht aus wie die Karte in der Sitztasche */
+.bf {
+  position: fixed; inset: 0; z-index: 80;
+  display: flex; flex-direction: column; gap: 14px;
+  padding: calc(14px + var(--safe-t)) 16px calc(16px + var(--safe-b));
+  background: rgba(6, 13, 27, 0.94);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  animation: fade 0.25s ease-out;
+}
+.bf-top, .bf-card, .bf-nav { width: 100%; max-width: 460px; margin: 0 auto; }
+.bf-top { display: flex; justify-content: space-between; align-items: center; }
+.bf-kicker { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); }
+.bf-skip { color: var(--muted); font-size: 14px; padding: 6px 0; }
+
+.bf-card {
+  flex: 1; min-height: 0; overflow: auto;
+  display: flex; flex-direction: column; gap: 12px;
+  background: var(--paper); color: var(--ink);
+  border-radius: 20px; padding: 0 20px 22px;
+  box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.8);
+  touch-action: pan-y; user-select: none; -webkit-user-select: none;
+  animation: bf-in 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes bf-in { from { opacity: 0; transform: translateX(24px); } }
+.bf-num {
+  margin: 0 -20px; padding: 10px 20px; border-radius: 20px 20px 0 0;
+  background: var(--ink); color: var(--paper);
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+}
+.bf-art { flex: 1 0 auto; min-height: 190px; max-height: 320px; display: grid; place-items: center; padding: 14px 0 4px; border-bottom: 1px dashed rgba(24, 34, 58, 0.18); }
+.bf-title { font-size: 23px; letter-spacing: -0.01em; line-height: 1.15; }
+.bf-text { margin: 0; color: #3b4560; font-size: 15.5px; line-height: 1.5; }
+
+.bf-nav { display: grid; grid-template-columns: 48px 1fr auto; align-items: center; gap: 12px; }
+.bf-nav .btn-ghost { font-size: 22px; padding: 0; }
+.bf-dots { display: flex; justify-content: center; gap: 6px; }
+.bf-dots span { width: 7px; height: 7px; border-radius: 4px; background: rgba(255, 255, 255, 0.2); transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), background 0.25s; }
+.bf-dots span.on { background: var(--accent); transform: scale(1.45); }
+
+/* Willkommen */
+.bf-welcome { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.bf-welcome-icon { width: 96px; height: 96px; filter: drop-shadow(0 14px 18px rgba(11, 24, 48, 0.35)); animation: bf-float 3s ease-in-out infinite; }
+.bf-welcome-name { font-size: 30px; font-weight: 500; }
+.bf-welcome-name b { color: var(--accent); }
+@keyframes bf-float { 50% { transform: translateY(-6px); } }
+
+/* Abflugtafel */
+.bf-board { position: relative; background: #0a0c10; color: var(--amber); border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 6px; font-size: 11px; }
+.bf-board-row { display: flex; gap: 8px; padding: 4px; border-radius: 6px; }
+.bf-tap { animation: bf-tap 2.4s ease-in-out infinite; }
+@keyframes bf-tap { 0%, 40%, 100% { background: transparent; } 55%, 75% { background: rgba(255, 204, 77, 0.14); } }
+.bf-finger { position: absolute; right: 30px; top: 22px; width: 22px; height: 22px; border-radius: 50%; background: rgba(255, 255, 255, 0.85); box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.2); animation: bf-finger 2.4s ease-in-out infinite; }
+@keyframes bf-finger { 0% { transform: translate(30px, 40px); opacity: 0; } 35% { opacity: 1; transform: translate(0, 0); } 50% { transform: scale(0.8); } 60%, 85% { transform: scale(1); opacity: 1; } 100% { opacity: 0; } }
+
+/* Sitze */
+.bf-car { display: grid; grid-template-columns: repeat(3, 58px); gap: 8px; padding: 18px 16px 14px; background: linear-gradient(#23406d, #1a3157); border-radius: 60px 60px 22px 22px / 70px 70px 22px 22px; }
+.bf-car > div:nth-child(2) { visibility: hidden; }
+.bf-seat { height: 62px; border-radius: 10px 10px 6px 6px; background: #234a6a; color: var(--text); display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: var(--mono); font-weight: 700; font-size: 13px; }
+.bf-seat small { font-family: var(--font); font-weight: 400; font-size: 9px; opacity: 0.8; }
+.bf-seat-pilot { background: #2a3a55; color: var(--muted); }
+.bf-seat-eco { background: #3c4352; }
+.bf-seat-pick { background: #3a2b52; animation: bf-pick 2.4s ease-in-out infinite; }
+@keyframes bf-pick { 0%, 30% { background: #3a2b52; color: var(--text); transform: none; } 45%, 100% { background: var(--accent); color: var(--on-accent); transform: translateY(-3px); } }
+
+/* Ticket mit Abriss-Demo */
+.bf-ticket { width: 230px; filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.25)); }
+.bf-ticket-main { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 18px 18px 22px; background: #fff; border-radius: 14px 14px 0 0; font-family: var(--mono); font-size: 26px; }
+.bf-ticket-plane { color: var(--accent); }
+.bf-ticket-stamp { position: absolute; left: 50%; top: 50%; padding: 2px 8px; border: 3px solid #138a4f; border-radius: 6px; color: #138a4f; font-size: 14px; font-weight: 700; text-transform: uppercase; transform: translate(-50%, -50%) rotate(-12deg); opacity: 0; animation: bf-stamp 3.2s infinite; }
+.bf-ticket-stub { display: flex; justify-content: space-between; padding: 12px 16px; background: var(--paper-2); border-top: 2px dashed rgba(24, 34, 58, 0.3); border-radius: 0 0 14px 14px; font-size: 12px; font-weight: 600; transform-origin: 100% 0; animation: bf-rip 3.2s infinite; }
+.bf-ticket-hint { color: var(--accent); }
+@keyframes bf-rip {
+  0%, 25% { transform: none; opacity: 1; }
+  45% { transform: rotate(8deg) translateY(6px); opacity: 1; }
+  65% { transform: rotate(26deg) translate(30px, 90px); opacity: 0; }
+  90% { transform: none; opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes bf-stamp { 0%, 55% { opacity: 0; transform: translate(-50%, -50%) rotate(-12deg) scale(2); } 65%, 90% { opacity: 0.85; transform: translate(-50%, -50%) rotate(-12deg) scale(1); } 100% { opacity: 0; } }
+
+/* Rechnung */
+.bf-math { width: 100%; max-width: 290px; display: flex; flex-direction: column; gap: 6px; font-family: var(--mono); font-size: 13px; }
+.bf-math-row { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; border-bottom: 1px solid rgba(24, 34, 58, 0.1); color: #3b4560; }
+.bf-math-total { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; padding: 12px 14px; border-radius: 12px; background: var(--ink); color: var(--paper); font-family: var(--font); }
+.bf-math-total b { font-family: var(--mono); font-size: 24px; color: var(--accent); }
+
+/* Cockpit */
+.bf-cockpit { width: 100%; max-width: 290px; display: flex; flex-direction: column; gap: 8px; }
+.bf-cockpit-btn { padding: 14px; border-radius: 12px; background: linear-gradient(135deg, var(--accent), var(--accent-deep)); color: var(--on-accent); font-weight: 700; text-align: center; }
+.bf-cockpit-row { display: flex; gap: 8px; }
+.bf-chip { flex: 1; padding: 9px 10px; border-radius: 999px; background: #e7dcc4; font-size: 12px; font-weight: 600; text-align: center; }
+.bf-chip-wa { background: var(--wa); color: #06361a; }
+.bf-chip-fuel { background: var(--ink); color: var(--paper); }
+
+/* Miles */
+.bf-miles { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.bf-miles .tier { font-size: 13px; padding: 6px 16px; }
+
+@media (max-height: 640px) {
+  .bf-art { min-height: 150px; }
+  .bf-title { font-size: 20px; }
+  .bf-text { font-size: 14.5px; }
+}

@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "supabase-poloch": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@supabase/mcp-server-supabase@0.15.0"],
+      "env": {
+        "SUPABASE_ACCESS_TOKEN": "${SUPABASE_POLOCH_TOKEN}"
+      }
+    }
+  }
+}

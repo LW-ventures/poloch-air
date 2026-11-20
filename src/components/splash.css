@@ -1,0 +1,71 @@
+/* ===== Startanimationen ===== */
+.sx { position: fixed; inset: 0; z-index: 100; overflow: hidden; cursor: pointer; }
+.sx-leaving { animation: sx-out 0.22s ease-in forwards; }
+@keyframes sx-out { to { opacity: 0; } }
+.sx-skip { position: absolute; left: 0; right: 0; bottom: calc(18px + var(--safe-b)); text-align: center; font-size: 12px; color: rgba(255, 255, 255, 0.45); letter-spacing: 0.04em; animation: fade 0.6s 0.8s both; }
+
+/* Admin-Auswahl */
+.splash-picks { display: flex; flex-direction: column; gap: 8px; }
+.splash-pick { display: flex; align-items: center; gap: 10px; padding: 12px 12px 12px 14px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); }
+.splash-pick.is-on { border-color: var(--accent); background: rgba(var(--accent-rgb), 0.1); }
+.splash-pick-main { flex: 1; display: flex; flex-direction: column; text-align: left; gap: 2px; }
+.splash-pick-main small { color: var(--muted); font-size: 12.5px; }
+.splash-pick.is-on .splash-pick-main b::after { content: ' ✓'; color: var(--accent); }
+
+/* Polo-Teile */
+.polo { display: block; overflow: visible; }
+.polo-glyph { display: block; overflow: visible; }
+
+/* ---------- Scheibe: Auto steht in der Leere, Kamera fährt ran, Scheibe zerspringt ---------- */
+.sx-scene { position: absolute; inset: 0; background: radial-gradient(70% 45% at 50% 55%, #1a2f55, #08111f 75%); animation: sx-scene-out 0.2s 1.75s ease-in forwards; }
+@keyframes sx-scene-out { to { opacity: 0; } }
+.sx-stage { position: absolute; left: 50%; top: 50%; width: min(86vw, 420px); transform: translate(-50%, -55%); }
+.sx-zoom { transform-origin: 50% 30.8%; animation: sx-camera 1.85s both; }
+@keyframes sx-camera {
+  0% { transform: scale(0.94); opacity: 0; animation-timing-function: ease-out; }
+  12% { opacity: 1; }
+  55% { transform: scale(1.28); animation-timing-function: linear; }       /* langsam ranfahren */
+  70% { transform: scale(1.32); animation-timing-function: cubic-bezier(0.6, 0, 0.9, 0.35); } /* Einschlag */
+  100% { transform: scale(18); }                                             /* rein in die Scheibe */
+}
+.sx-shadow { position: absolute; left: 6%; right: 6%; bottom: -4%; height: 12%; border-radius: 50%; background: radial-gradient(closest-side, rgba(0, 0, 0, 0.55), transparent); }
+.sx-shake { position: relative; animation: sx-shake 0.24s 1.05s linear both; }
+@keyframes sx-shake { 25% { transform: translate(-3px, 1px); } 50% { transform: translate(3px, -1px); } 75% { transform: translate(-2px, 0); } }
+.sx-car .polo-crack { stroke-dasharray: 1; stroke-dashoffset: 1; animation: sx-crack 0.22s 1.05s ease-out forwards; }
+@keyframes sx-crack { to { stroke-dashoffset: 0; } }
+
+.sx-flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; animation: sx-flash 0.3s 1.05s ease-out; }
+@keyframes sx-flash { 15% { opacity: 0.7; } }
+
+.sx-glass { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transform-origin: 50% 50%; animation: sx-glass-in 0.22s 1.65s ease-out forwards, sx-through 0.8s 1.9s cubic-bezier(0.55, 0, 0.85, 0.3) forwards; }
+@keyframes sx-glass-in { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
+@keyframes sx-through { from { opacity: 1; transform: scale(1); } 80% { opacity: 1; } to { opacity: 0; transform: scale(11); } }
+
+.sx-shards { position: absolute; left: 50%; top: 50%; }
+.sx-shards span { position: absolute; left: 0; top: 0; background: linear-gradient(135deg, rgba(235, 247, 255, 0.95), rgba(150, 190, 230, 0.55)); opacity: 0; animation: sx-shard 0.75s cubic-bezier(0.3, 0.6, 0.6, 1) forwards; }
+@keyframes sx-shard {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(0.6); }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(3.2); }
+}
+
+/* ---------- Airline: Fallblatt-Schriftzug + Flügel-Auto im Bogen ---------- */
+.sx-airline { animation: sx-out 0.35s 2.75s ease-in forwards; }
+.sx-air-bg { position: absolute; inset: 0; background: var(--bg); }
+.sx-lockup { position: absolute; left: 50%; top: 46%; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 0.45em; font-size: clamp(20px, 6.8vw, 40px); color: var(--text); }
+.sx-air-word .flap-cell { width: 0.9em; height: 1.36em; }
+.sx-air-air { color: var(--accent); }
+.sx-air-slot { position: relative; width: 2.3em; height: 2.1em; margin-left: 0.1em; }
+/* Steigflug in EINER fließenden Kurve: langsam los, schneller, sanft abbremsen.
+   X und Y laufen gleich lang, aber Y steigt anfangs schneller -> Bahn wird zum Ende hin flach, nie höher als das Ziel. */
+.sx-fly { position: absolute; inset: 0; display: grid; place-items: center; color: var(--accent); }
+.sx-fly-x { animation: sx-fly-x 2s 0.15s cubic-bezier(0.45, 0, 0.4, 1) both; }
+.sx-fly-y { animation: sx-fly-y 2s 0.15s cubic-bezier(0.3, 0.05, 0.25, 1) both; }
+.sx-fly-r { animation: sx-fly-r 2s 0.15s cubic-bezier(0.45, 0, 0.4, 1) both; }
+.sx-glyph { width: 100%; height: auto; }
+@keyframes sx-fly-x { from { transform: translateX(-84vw); } to { transform: translateX(0); } }
+@keyframes sx-fly-y { from { transform: translateY(58vh); } to { transform: translateY(0); } }
+@keyframes sx-fly-r {
+  0%   { transform: rotate(-32deg) scale(0.7); opacity: 0; }
+  12%  { opacity: 1; }
+  100% { transform: rotate(-6deg) scale(1); opacity: 1; }
+}

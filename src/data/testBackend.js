@@ -102,6 +102,7 @@ export function createTestBackend() {
       deleteRoute: (routeId) => run(A.deleteRoute, { routeId }),
       addUser: (name) => run(A.addUser, { name }),
       renameUser: (targetId, name) => run(A.renameUser, { targetId, name }),
+      crewStatus: () => Promise.resolve(null), // im Testmodus gibt es keine echten Logins
     },
   };
 }

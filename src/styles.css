@@ -509,3 +509,6 @@ h1, h2, h3 { margin: 0; line-height: 1.15; }
 .boot .app-icon { animation: boot-pulse 1.2s ease-in-out infinite; }
 @keyframes boot-pulse { 50% { opacity: 0.55; transform: scale(0.96); } }
 .pw-row { display: flex; gap: 8px; align-items: flex-end; }
+
+/* Hinweis: im Browser statt in der Homescreen-App */
+.login-tip { margin: 0 0 4px; padding: 10px 12px; border-radius: 10px; font-family: var(--font); font-size: 13px; line-height: 1.45; color: #d7dce5; background: rgba(var(--accent-rgb), 0.12); border: 1px solid rgba(var(--accent-rgb), 0.35); }

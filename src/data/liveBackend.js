@@ -189,6 +189,12 @@ export function createLiveBackend() {
       addUser: () =>
         Promise.reject(new Error('Neue Personen legt der Admin im Supabase-Dashboard an (Authentication → Add user).')),
       renameUser: (targetId, name) => rpc('rename_member', { p_target: targetId, p_name: name }),
+      // nur für Admins: { [userId]: lastSignInAt | null }
+      crewStatus: async () => {
+        const { data, error } = await sb.rpc('crew_status');
+        if (error) throw new Error(error.message);
+        return Object.fromEntries((data || []).map((r) => [r.id, r.last_sign_in_at]));
+      },
     },
   };
 }

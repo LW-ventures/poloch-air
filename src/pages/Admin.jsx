@@ -1,12 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { api, MODE } from '../data/store.js';
 import { go } from '../lib/router.js';
 import { Section, attempt } from '../components/ui.jsx';
 import { SPLASHES } from '../components/Splash.jsx';
 
+// "heute 19:24", "gestern 07:10", "18.11. 16:31", "noch nie"
+function lastSeen(iso, now = new Date()) {
+  if (!iso) return 'noch nie eingeloggt';
+  const d = new Date(iso);
+  const time = d.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+  const day = (x) => new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
+  const diff = Math.round((day(now) - day(d)) / 86400000);
+  const when = diff === 0 ? 'heute' : diff === 1 ? 'gestern' : d.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' });
+  return `zuletzt eingeloggt ${when} ${time}`;
+}
+
 export default function Admin({ state }) {
   const [name, setName] = useState('');
   const [editing, setEditing] = useState(null);
+  const [seen, setSeen] = useState(null); // { userId: lastSignInAt } – nur live
+
+  useEffect(() => {
+    api.crewStatus().then(setSeen).catch(() => setSeen(null));
+  }, []);
 
   const add = async (e) => {
     e.preventDefault();
@@ -47,7 +63,10 @@ export default function Admin({ state }) {
                 <>
                   <span className="route-names">
                     {u.name}
-                    <small>{u.isAdmin ? 'Admin' : state.cars.some((c) => c.ownerId === u.id) ? 'Captain' : 'Passagier'}</small>
+                    <small>
+                      {u.isAdmin ? 'Admin' : state.cars.some((c) => c.ownerId === u.id) ? 'Captain' : 'Passagier'}
+                      {seen && ` · ${lastSeen(seen[u.id])}`}
+                    </small>
                   </span>
                   <button className="chip" onClick={() => setEditing({ id: u.id, name: u.name })}>umbenennen</button>
                 </>

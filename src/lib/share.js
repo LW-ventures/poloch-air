@@ -10,8 +10,10 @@ export function whatsappText(flights, pilotName) {
     lines.push('');
   }
   if (flights[0]?.note) lines.push(`Gate: ${flights[0].note}`, '');
-  lines.push(`Captain ${pilotName}. Jetzt einchecken:`);
-  lines.push(appUrl(`/flight/${flights[0].id}`));
+  lines.push(`Captain ${pilotName}`, '');
+  // Links aus WhatsApp öffnen auf dem iPhone nie die Homescreen-App – daher zuerst dorthin schicken
+  lines.push('👉 Zum Buchen den *Polochrechner* auf dem Homescreen öffnen.');
+  lines.push(`Oder im Browser: ${appUrl(`/flight/${flights[0].id}`)}`);
   return lines.join('\n');
 }
 

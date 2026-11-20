@@ -6,6 +6,15 @@ import { toastError } from '../components/ui.jsx';
 
 const LAST_NAME = 'polochair:lastName';
 
+// Läuft die Seite als Homescreen-App (statt im Browser)?
+function isStandalone() {
+  try {
+    return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  } catch {
+    return false;
+  }
+}
+
 function Hero() {
   return (
     <div className="login-hero">
@@ -75,6 +84,13 @@ function LiveLogin({ notMember }) {
 
   return (
     <form className="login-form" onSubmit={submit}>
+      {/* Nur bei Flug-Links aus der WhatsApp-Durchsage – beim allgemeinen Einladungslink nicht */}
+      {!isStandalone() && window.location.hash.startsWith('#/flight/') && (
+        <p className="login-tip">
+          Du hast den Polochrechner auf dem Homescreen? Dann öffne lieber die App, dort bist du schon eingeloggt.
+          Hier im Browser musst du dich einmal extra anmelden.
+        </p>
+      )}
       <p className="login-q">Bitte zum Check-in.</p>
       <label className="field">
         <span>Name</span>

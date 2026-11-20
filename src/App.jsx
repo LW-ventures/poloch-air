@@ -14,6 +14,7 @@ import Admin from './pages/Admin.jsx';
 import Briefing, { needsBriefing } from './components/Briefing.jsx';
 import Splash from './components/Splash.jsx';
 import { AppIcon } from './components/Polo.jsx';
+import UpdateBanner from './components/UpdateBanner.jsx';
 import { useEffect, useState } from 'react';
 
 export default function App() {
@@ -53,6 +54,7 @@ export default function App() {
     <>
       <Login state={state} notMember={notMember} />
       {splashEl}
+      <UpdateBanner />
       <Toasts />
     </>
   );
@@ -130,6 +132,7 @@ export default function App() {
           onDone={() => setBriefing(false)}
         />
       )}
+      <UpdateBanner />
       <Toasts />
     </div>
   );

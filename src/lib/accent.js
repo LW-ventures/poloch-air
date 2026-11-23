@@ -2,7 +2,7 @@
 const KEY = 'polochair:accent';
 
 export const ACCENTS = [
-  { id: 'orange', name: 'Poloch-Orange', color: '#ff7a3d' },
+  { id: 'orange', name: 'Claude-Orange', color: '#ff7a3d' },
   { id: 'tuerkis', name: 'Musikbox-Türkis', color: '#1ccfc9' },
 ];
 

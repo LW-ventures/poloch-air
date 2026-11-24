@@ -8,8 +8,8 @@ const KEY = 'polochair:icon';
 const EVENT = 'polochair:icon-change';
 
 export const ICON_STYLES = [
-  { id: 'classic', name: 'Aktuell' },
-  { id: 'polo', name: 'Neu (Polo-Form)' },
+  { id: 'classic', name: 'Standard' },
+  { id: 'polo', name: 'Polo' },
 ];
 
 export function getIconStyle() {

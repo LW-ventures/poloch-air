@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { milesFor, monthlyFlights, nextTier, TIERS } from '../lib/domain.js';
 import { Section, TierBadge } from '../components/ui.jsx';
 
@@ -5,10 +6,16 @@ export default function Miles({ state, user, now }) {
   const rows = state.users
     .map((u) => ({ user: u, m: milesFor(state, u.id) }))
     .sort((a, b) => b.m.total - a.m.total);
-  const { keys, table } = monthlyFlights(state, 4, now);
+  const { keys, table } = monthlyFlights(state, 6, now);
   const max = Math.max(1, ...state.users.flatMap((u) => keys.map((k) => table.get(u.id)?.[k] || 0)));
   const mine = milesFor(state, user.id);
   const nt = nextTier(mine.total);
+  // Diagramm scrollt in seinem Rahmen; zu Beginn steht der aktuelle Monat rechts im Bild
+  const chartRef = useRef(null);
+  useEffect(() => {
+    const el = chartRef.current;
+    if (el) el.scrollLeft = el.scrollWidth;
+  }, [state.users.length]);
 
   return (
     <div className="page">
@@ -54,7 +61,7 @@ export default function Miles({ state, user, now }) {
       </Section>
 
       <Section title="Mitflüge pro Monat">
-        <div className="months">
+        <div className="months" ref={chartRef} style={{ "--n": state.users.length }}>
           {keys.map((k) => (
             <div key={k} className="month">
               <div className="month-bars">

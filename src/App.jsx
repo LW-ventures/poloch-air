@@ -41,19 +41,27 @@ export default function App() {
     return () => window.removeEventListener('polochair:briefing', on);
   }, []);
 
-  if (!ready) return (
+  // Die Startanimation hängt immer an derselben Stelle im Baum, damit sie beim Wechsel
+  // Laden -> Check-in -> App nicht neu startet (sonst "Wackler": sie läuft zweimal an).
+  return (
     <>
-      <div className="boot" aria-busy="true">
-        <AppIcon size={72} />
-      </div>
+      <Screen state={state} user={user} now={now} ready={ready} notMember={notMember} route={route}
+        briefing={briefing && !splashEl} onBriefingDone={() => setBriefing(false)} />
       {splashEl}
     </>
+  );
+}
+
+function Screen({ state, user, now, ready, notMember, route, briefing, onBriefingDone }) {
+  if (!ready) return (
+    <div className="boot" aria-busy="true">
+      <AppIcon size={72} />
+    </div>
   );
 
   if (!user) return (
     <>
       <Login state={state} notMember={notMember} />
-      {splashEl}
       <UpdateBanner />
       <Toasts />
     </>
@@ -123,13 +131,12 @@ export default function App() {
         <Tab to="/miles" active={p0 === 'miles'} icon="star" label="Miles" />
         <Tab to="/profil" active={p0 === 'profil' || p0 === 'admin'} icon="user" label="Profil" />
       </nav>
-      {splashEl}
-      {briefing && !splashEl && (
+      {briefing && (
         <Briefing
           user={user}
           isCaptain={state.cars.some((c) => c.ownerId === user.id)}
           captainName={state.users.find((u) => state.cars.some((c) => c.ownerId === u.id))?.name || 'Captain'}
-          onDone={() => setBriefing(false)}
+          onDone={onBriefingDone}
         />
       )}
       <UpdateBanner />

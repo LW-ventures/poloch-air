@@ -8,6 +8,12 @@
       "port": 5173
     },
     {
+      "name": "poloch-air-test",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:test", "--", "--port", "5174", "--strictPort"],
+      "port": 5174
+    },
+    {
       "name": "poloch-air-build",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "preview", "--", "--port", "4173", "--strictPort"],

@@ -68,3 +68,20 @@ export const COLORS = {
   tire: '#0b0d11',
   rim: '#a9b2bd',
 };
+
+// ---------- Symbol "Polo" (zweite Icon-Variante): Stil wie oben, Form der detaillierten Zeichnung ----------
+// Koordinaten wie BODY (viewBox 0 0 300 130), Flügel auf die Dachlinie gesetzt.
+export const GLYPH2_VIEWBOX = '-20 -90 316 206';
+export const GLYPH2_RATIO = 206 / 316;
+// Nur Vorder- und Hintertür-Fenster (Dreiecksfenster bleibt schwarz), oben etwas tiefer -> kräftige Dachlinie
+export const GLYPH2_WINDOWS =
+  'M190 41.3 L169.5 20.5 Q150 18 130.2 17.8 L130.2 41.3 Z M122.6 17.8 L77.2 18.4 L68.5 40 L122.6 40.8 Z';
+export const GLYPH2_BODY = `${BODY} ${GLYPH2_WINDOWS}`;
+export const GLYPH2_WHEELS = WHEELS.map((x) => [x, WHEEL_Y]);
+export const GLYPH2_WHEEL_R = 20;
+export const GLYPH2_WING = GLYPH_WING;
+export const GLYPH2_WING_TRANSFORM = 'translate(-10.2 -48.2) scale(1.3)';
+// Lage in der 512er-Icon-Kachel
+export const GLYPH2_ICON_TRANSFORM = 'translate(258 266) rotate(-10) scale(1.2) translate(-138 -13.5)';
+// Lage des klassischen Symbols in der 512er-Kachel
+export const GLYPH_ICON_TRANSFORM = 'translate(258 262) rotate(-10) scale(1.78) translate(-104 -46)';

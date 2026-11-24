@@ -1,0 +1,29 @@
+{
+  "name": "Polochrechner",
+  "short_name": "Polochrechner",
+  "description": "Spritgeld fair teilen – die Low-Cortisol-Fahrgemeinschaft.",
+  "start_url": "../",
+  "scope": "../",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0c1b33",
+  "theme_color": "#0c1b33",
+  "icons": [
+    {
+      "src": "../icons/app-classic-tuerkis.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "../icons/app-classic-tuerkis-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "../icons/app-classic-tuerkis-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

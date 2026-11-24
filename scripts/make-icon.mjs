@@ -101,3 +101,41 @@ const chosen = process.argv[2] || '2';
 const [file, make] = VARIANTS[chosen];
 fs.writeFileSync(new URL('../public/icon.svg', import.meta.url), make());
 console.log(`4 Varianten in public/icons/, aktiv: ${chosen} (${file})`);
+
+// ---------- Wählbare App-Icons (Profil → App-Icon): Stil × Farbe ----------
+// Die App tauscht je nach Wahl apple-touch-icon und Manifest aus (src/lib/appIcon.js).
+// PNGs (…-192.png, …-512.png) werden im Browser aus den SVGs gerendert, siehe README.
+const COLORS_APP = { orange: ORANGE, tuerkis: '#1ccfc9' };
+function glyphPolo(color) {
+  const wheels = P.GLYPH2_WHEELS.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="${P.GLYPH2_WHEEL_R}"/>`).join('');
+  return `<g fill="${color}" transform="${P.GLYPH2_ICON_TRANSFORM}">
+    <path d="${P.GLYPH2_WING}" transform="${P.GLYPH2_WING_TRANSFORM}"/>
+    <path d="${P.GLYPH2_BODY}" fill-rule="evenodd"/>
+    ${wheels}
+  </g>`;
+}
+const STYLES_APP = { classic: glyph, polo: glyphPolo };
+const baseManifest = JSON.parse(fs.readFileSync(new URL('../public/manifest.webmanifest', import.meta.url), 'utf8'));
+const mdir = new URL('../public/manifests/', import.meta.url);
+fs.mkdirSync(mdir, { recursive: true });
+for (const [style, g] of Object.entries(STYLES_APP)) {
+  for (const [color, bg] of Object.entries(COLORS_APP)) {
+    const name = `app-${style}-${color}`;
+    fs.writeFileSync(
+      new URL(`${name}.svg`, dir),
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">\n  <rect width="512" height="512" rx="112" fill="${bg}"/>\n  ${g(BLACK)}\n</svg>\n`,
+    );
+    const m = {
+      ...baseManifest,
+      start_url: '../',
+      scope: '../',
+      icons: [
+        { src: `../icons/${name}.svg`, sizes: 'any', type: 'image/svg+xml' },
+        { src: `../icons/${name}-192.png`, sizes: '192x192', type: 'image/png' },
+        { src: `../icons/${name}-512.png`, sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
+      ],
+    };
+    fs.writeFileSync(new URL(`${style}-${color}.webmanifest`, mdir), JSON.stringify(m, null, 2) + '\n');
+  }
+}
+console.log('App-Icons: public/icons/app-{classic,polo}-{orange,tuerkis}.svg + public/manifests/');

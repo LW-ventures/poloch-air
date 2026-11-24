@@ -3,6 +3,8 @@ import { api, MODE } from '../data/store.js';
 import { go } from '../lib/router.js';
 import { soundOn, setSound, playChime } from '../lib/fx.js';
 import { ACCENTS, getAccent, setAccent } from '../lib/accent.js';
+import { ICON_STYLES, applyAppIcon, setIconStyle, useIconStyle } from '../lib/appIcon.js';
+import { AppIcon } from '../components/Polo.jsx';
 import { fmtEuro } from '../lib/domain.js';
 import { Section, attempt, Empty, toastError } from '../components/ui.jsx';
 
@@ -13,6 +15,7 @@ export default function Profile({ state, user }) {
   const car = state.cars.find((c) => c.ownerId === user.id);
   const [sound, setSoundState] = useState(soundOn());
   const [accent, setAccentState] = useState(getAccent());
+  const iconStyle = useIconStyle();
 
   return (
     <div className="page">
@@ -40,12 +43,35 @@ export default function Profile({ state, user }) {
               onClick={() => {
                 setAccent(a.id);
                 setAccentState(a.id);
+                applyAppIcon(iconStyle, a.id);
               }}
             >
               <i style={{ background: a.color }} />
               {a.name}
             </button>
           ))}
+        </div>
+
+        <div className="icon-pick-block">
+          <span className="icon-pick-label">App-Icon</span>
+          <div className="icon-pick" role="radiogroup" aria-label="App-Icon">
+            {ICON_STYLES.map((s) => (
+              <button
+                key={s.id}
+                role="radio"
+                aria-checked={iconStyle === s.id}
+                className={`icon-opt ${iconStyle === s.id ? 'is-on' : ''}`}
+                onClick={() => setIconStyle(s.id)}
+              >
+                <AppIcon size={56} variant={s.id} />
+                <span>{s.name}</span>
+              </button>
+            ))}
+          </div>
+          <p className="hint">
+            Das Icon auf dem Homescreen ändert sich nicht von selbst. Wenn du ein anderes Icon oder die andere Farbe
+            dort haben willst: Polochrechner vom Homescreen entfernen und neu hinzufügen. In der App wechselt es sofort.
+          </p>
         </div>
         <label className="toggle">
           <input

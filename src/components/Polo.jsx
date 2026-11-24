@@ -1,18 +1,32 @@
 import * as P from '../lib/poloArt.js';
+import { useIconStyle } from '../lib/appIcon.js';
 
-// App-Icon direkt in der App (Variante 2): Kachel in Akzentfarbe, schwarzes Flügel-Auto.
+// App-Icon direkt in der App: Kachel in Akzentfarbe, schwarzes Flügel-Auto.
 // Inline statt <img>, damit es beim Wechsel Orange/Türkis automatisch mitfärbt.
-export function AppIcon({ size = 36, className = '' }) {
+// variant: 'classic' | 'polo' – ohne Angabe der im Profil gewählte Stil.
+export function AppIcon({ size = 36, className = '', variant }) {
+  const chosen = useIconStyle();
+  const style = variant || chosen;
   return (
     <svg className={`app-icon ${className}`} width={size} height={size} viewBox="0 0 512 512" aria-hidden="true">
       <rect width="512" height="512" rx="112" fill="var(--accent)" />
-      <g fill="#12161e" transform="translate(258 262) rotate(-10) scale(1.78) translate(-104 -46)">
-        <path d={P.GLYPH_WING} />
-        <path d={P.GLYPH_BODY} fillRule="evenodd" />
-        {P.GLYPH_WHEELS.map(([x, y]) => (
-          <circle key={x} cx={x} cy={y} r={P.GLYPH_WHEEL_R} />
-        ))}
-      </g>
+      {style === 'polo' ? (
+        <g fill="#12161e" transform={P.GLYPH2_ICON_TRANSFORM}>
+          <path d={P.GLYPH2_WING} transform={P.GLYPH2_WING_TRANSFORM} />
+          <path d={P.GLYPH2_BODY} fillRule="evenodd" />
+          {P.GLYPH2_WHEELS.map(([x, y]) => (
+            <circle key={x} cx={x} cy={y} r={P.GLYPH2_WHEEL_R} />
+          ))}
+        </g>
+      ) : (
+        <g fill="#12161e" transform={P.GLYPH_ICON_TRANSFORM}>
+          <path d={P.GLYPH_WING} />
+          <path d={P.GLYPH_BODY} fillRule="evenodd" />
+          {P.GLYPH_WHEELS.map(([x, y]) => (
+            <circle key={x} cx={x} cy={y} r={P.GLYPH_WHEEL_R} />
+          ))}
+        </g>
+      )}
     </svg>
   );
 }

@@ -8,8 +8,10 @@ import '@fontsource/jetbrains-mono/700.css';
 import './styles.css';
 import App from './App.jsx';
 import { applyAccent } from './lib/accent.js';
+import { applyAppIcon } from './lib/appIcon.js';
 
 applyAccent();
+applyAppIcon();
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>

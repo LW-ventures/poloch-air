@@ -15,6 +15,7 @@ import Briefing, { needsBriefing } from './components/Briefing.jsx';
 import Splash from './components/Splash.jsx';
 import { AppIcon } from './components/Polo.jsx';
 import UpdateBanner from './components/UpdateBanner.jsx';
+import { syncPrefsFromUser } from './lib/prefs.js';
 import { useEffect, useState } from 'react';
 
 export default function App() {
@@ -35,6 +36,10 @@ export default function App() {
   useEffect(() => {
     if (user && needsBriefing(user.id)) setBriefing(true);
   }, [user?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+  // Farbe, App-Icon und Sound aus dem Backend übernehmen (gleich auf allen Geräten)
+  useEffect(() => {
+    syncPrefsFromUser(user);
+  }, [user?.id, user?.accent, user?.iconStyle, user?.sound]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     const on = () => setBriefing(true);
     window.addEventListener('polochair:briefing', on);

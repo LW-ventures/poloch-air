@@ -5,6 +5,7 @@ import { soundOn, setSound, playChime } from '../lib/fx.js';
 import { ACCENTS, getAccent, setAccent } from '../lib/accent.js';
 import { ICON_STYLES, applyAppIcon, setIconStyle, useIconStyle } from '../lib/appIcon.js';
 import { AppIcon } from '../components/Polo.jsx';
+import { pushPrefs } from '../lib/prefs.js';
 import { fmtEuro } from '../lib/domain.js';
 import { Section, attempt, Empty, toastError } from '../components/ui.jsx';
 
@@ -13,8 +14,12 @@ const de = (n) => (n == null || n === '' ? '' : String(n).replace('.', ','));
 
 export default function Profile({ state, user }) {
   const car = state.cars.find((c) => c.ownerId === user.id);
-  const [sound, setSoundState] = useState(soundOn());
-  const [accent, setAccentState] = useState(getAccent());
+  // Werte bei jedem Rendern frisch lesen, damit Übernahmen aus dem Backend sofort sichtbar sind
+  const [, rerender] = useState(0);
+  const sound = soundOn();
+  const accent = getAccent();
+  const setSoundState = () => rerender((n) => n + 1);
+  const setAccentState = () => rerender((n) => n + 1);
   const iconStyle = useIconStyle();
 
   return (
@@ -44,6 +49,7 @@ export default function Profile({ state, user }) {
                 setAccent(a.id);
                 setAccentState(a.id);
                 applyAppIcon(iconStyle, a.id);
+                pushPrefs();
               }}
             >
               <i style={{ background: a.color }} />
@@ -61,7 +67,10 @@ export default function Profile({ state, user }) {
                 role="radio"
                 aria-checked={iconStyle === s.id}
                 className={`icon-opt ${iconStyle === s.id ? 'is-on' : ''}`}
-                onClick={() => setIconStyle(s.id)}
+                onClick={() => {
+                  setIconStyle(s.id);
+                  pushPrefs();
+                }}
               >
                 <AppIcon size={56} variant={s.id} />
                 <span>{s.name}</span>
@@ -69,8 +78,9 @@ export default function Profile({ state, user }) {
             ))}
           </div>
           <p className="hint">
-            Das Icon auf dem Homescreen ändert sich nicht von selbst. Wenn du ein anderes Icon oder die andere Farbe
-            dort haben willst: Polochrechner vom Homescreen entfernen und neu hinzufügen. In der App wechselt es sofort.
+            Das Icon auf dem Homescreen ändert sich nicht von selbst. Für ein anderes Icon oder die andere Farbe dort:
+            Polochrechner vom Homescreen entfernen, in Safari bzw. Chrome einloggen und neu hinzufügen. Deine Auswahl ist
+            dort automatisch schon gesetzt.
           </p>
         </div>
         <label className="toggle">
@@ -80,6 +90,7 @@ export default function Profile({ state, user }) {
             onChange={(e) => {
               setSound(e.target.checked);
               setSoundState(e.target.checked);
+              pushPrefs();
               if (e.target.checked) playChime();
             }}
           />

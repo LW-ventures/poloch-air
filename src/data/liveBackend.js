@@ -189,6 +189,11 @@ export function createLiveBackend() {
       addUser: () =>
         Promise.reject(new Error('Neue Personen legt der Admin im Supabase-Dashboard an (Authentication → Add user).')),
       renameUser: (targetId, name) => rpc('rename_member', { p_target: targetId, p_name: name }),
+      // persönliche Einstellungen (Farbe, Icon, Sound) im Backend ablegen
+      savePrefs: async ({ accent, iconStyle, sound }) => {
+        const { error } = await sb.rpc("save_prefs", { p_accent: accent, p_icon_style: iconStyle, p_sound: sound });
+        if (error) throw new Error(error.message);
+      },
       // nur für Admins: { [userId]: lastSignInAt | null }
       crewStatus: async () => {
         const { data, error } = await sb.rpc('crew_status');

@@ -82,7 +82,7 @@ export default function Admin({ state }) {
         ) : (
           <p className="hint">
             Neue Person: im Supabase-Dashboard unter Authentication → Add user mit <code>vorname@polochair.local</code>{' '}
-            anlegen („Auto Confirm User“ an), dann Claude Bescheid sagen, damit sie freigeschaltet wird.
+            anlegen („Auto Confirm User“ an). Die Person wird automatisch freigeschaltet, der Name kommt aus der Adresse.
           </p>
         )}
       </Section>

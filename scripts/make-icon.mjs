@@ -25,8 +25,8 @@ const navyBg = `
 function detailed() {
   const wheels = P.WHEELS.map(
     (x) =>
-      `<circle cx="${x}" cy="${P.WHEEL_Y}" r="19" fill="${C.tire}" stroke="#2b3038" stroke-width="2"/>` +
-      `<circle cx="${x}" cy="${P.WHEEL_Y}" r="10" fill="${C.rim}"/>` +
+      `<circle cx="${x}" cy="${P.WHEEL_Y}" r="${P.WHEEL_R}" fill="${C.tire}" stroke="#2b3038" stroke-width="2"/>` +
+      `<circle cx="${x}" cy="${P.WHEEL_Y}" r="${P.RIM_R}" fill="${C.rim}"/>` +
       `<circle cx="${x}" cy="${P.WHEEL_Y}" r="3" fill="#3a4049"/>`,
   ).join('');
   const polo = `

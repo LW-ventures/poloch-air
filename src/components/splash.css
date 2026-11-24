@@ -20,7 +20,7 @@
 .sx-scene { position: absolute; inset: 0; background: radial-gradient(70% 45% at 50% 55%, #1a2f55, #08111f 75%); animation: sx-scene-out 0.2s 1.75s ease-in forwards; }
 @keyframes sx-scene-out { to { opacity: 0; } }
 .sx-stage { position: absolute; left: 50%; top: 50%; width: min(86vw, 420px); transform: translate(-50%, -55%); }
-.sx-zoom { transform-origin: 50% 30.8%; animation: sx-camera 1.85s both; }
+.sx-zoom { transform-origin: 52.7% 21.5%; animation: sx-camera 1.85s both; }
 @keyframes sx-camera {
   0% { transform: scale(0.94); opacity: 0; animation-timing-function: ease-out; }
   12% { opacity: 1; }

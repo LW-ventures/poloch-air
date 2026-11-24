@@ -41,41 +41,52 @@ export function PoloGlyph({ size = 24, className = '', title }) {
 }
 
 // Der Poloch. wings: Flügel dran; flap: Flügel schlagen; spin: Räder drehen; crack: Riss in der Scheibe
-export default function Polo({ wings = false, flap = false, spin = false, crack = false, className = '', title }) {
+// art: alternative Zeichnung (nur für Vergleiche), Standard ist poloArt.js
+export default function Polo({ wings = false, flap = false, spin = false, crack = false, className = "", title, art = P }) {
   const C = P.COLORS;
-  const vb = wings ? '-20 -80 330 210' : '0 0 300 130';
-  const [px, py] = P.WING_PIVOT;
+  const vb = wings ? "-20 -80 330 210" : "0 0 300 130";
+  const [px, py] = art.WING_PIVOT;
+  const handles = art.HANDLES || [art.HANDLE];
+  const tireR = art.WHEEL_R || 19;
+  const rimR = art.RIM_R || 10;
+  const wy = art.WHEEL_Y;
   return (
-    <svg className={`polo ${className}`} viewBox={vb} role={title ? 'img' : undefined} aria-label={title} aria-hidden={title ? undefined : true}>
+    <svg className={`polo ${className}`} viewBox={vb} role={title ? "img" : undefined} aria-label={title} aria-hidden={title ? undefined : true}>
       {wings && (
-        <g className={`polo-wing ${flap ? 'is-flapping' : ''}`} style={{ transformOrigin: `${px + 14}px ${py - 4}px` }}>
-          <path d={P.WING} fill={C.wingFar} transform="translate(14 -4)" />
+        <g className={`polo-wing ${flap ? "is-flapping" : ""}`} style={{ transformOrigin: `${px + 14}px ${py - 4}px` }}>
+          <path d={art.WING} fill={C.wingFar} transform="translate(14 -4)" />
         </g>
       )}
-      <path d={P.BODY} fill={C.body} stroke={C.bodyEdge} strokeWidth="1.4" strokeLinejoin="round" />
-      <path d={P.WINDOW_REAR} fill={C.glass} />
-      <path d={P.WINDOW_FRONT} fill={C.glass} />
-      <path d={P.GLARE} fill={C.glassGlare} />
-      <path d={P.SHEEN} fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="2" strokeLinecap="round" />
-      <path d={P.DOOR} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1.2" />
-      <path d={P.SKIRT} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.2" />
-      <rect x={P.HANDLE[0]} y={P.HANDLE[1]} width="12" height="3" rx="1.5" fill="rgba(255,255,255,0.25)" />
-      <path d={P.MIRROR} fill={C.body} stroke={C.bodyEdge} strokeWidth="1" />
-      <path d={P.HEADLIGHT} fill={C.head} />
-      <path d={P.TAILLIGHT} fill={C.tail} />
-      {crack && <path className="polo-crack" pathLength="1" d={P.CRACK} fill="none" stroke="#e8f4ff" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />}
-      {P.WHEELS.map((x) => (
-        <g key={x} className={spin ? 'polo-wheel is-spinning' : 'polo-wheel'} style={{ transformOrigin: `${x}px ${P.WHEEL_Y}px` }}>
-          <circle cx={x} cy={P.WHEEL_Y} r="19" fill={C.tire} stroke="#2b3038" strokeWidth="2" />
-          <circle cx={x} cy={P.WHEEL_Y} r="10" fill={C.rim} />
-          <path d={`M${x} ${P.WHEEL_Y - 10} L${x} ${P.WHEEL_Y + 10} M${x - 10} ${P.WHEEL_Y} L${x + 10} ${P.WHEEL_Y}`} stroke="#5f6873" strokeWidth="2" />
-          <circle cx={x} cy={P.WHEEL_Y} r="3" fill="#3a4049" />
+      <path d={art.BODY} fill={C.body} stroke={C.bodyEdge} strokeWidth="1.4" strokeLinejoin="round" />
+      <path d={art.WINDOW_REAR} fill={C.glass} />
+      <path d={art.WINDOW_FRONT} fill={C.glass} />
+      <path d={art.GLARE} fill={C.glassGlare} />
+      <path d={art.SHEEN} fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="2" strokeLinecap="round" />
+      <path d={art.DOOR} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1.2" />
+      <path d={art.SKIRT} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.2" />
+      {handles.map(([hx, hy]) => (
+        <rect key={hx} x={hx} y={hy} width="12" height="3" rx="1.5" fill="rgba(255,255,255,0.25)" />
+      ))}
+      <path d={art.MIRROR} fill={C.body} stroke={C.bodyEdge} strokeWidth="1" />
+      <path d={art.HEADLIGHT} fill={C.head} />
+      <path d={art.TAILLIGHT} fill={C.tail} />
+      {crack && <path className="polo-crack" pathLength="1" d={art.CRACK} fill="none" stroke="#e8f4ff" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />}
+      {art.WHEELS.map((x) => (
+        <g key={x} className={spin ? "polo-wheel is-spinning" : "polo-wheel"} style={{ transformOrigin: `${x}px ${wy}px` }}>
+          <circle cx={x} cy={wy} r={tireR} fill={C.tire} stroke="#2b3038" strokeWidth="2" />
+          <circle cx={x} cy={wy} r={rimR} fill={C.rim} />
+          {/* Alufelge mit 5 Speichen */}
+          {[0, 72, 144, 216, 288].map((a) => {
+            const r = (a - 90) * Math.PI / 180;
+            return <line key={a} x1={x} y1={wy} x2={x + Math.cos(r) * (rimR - 1)} y2={wy + Math.sin(r) * (rimR - 1)} stroke="#5f6873" strokeWidth={rimR / 4.5} strokeLinecap="round" />;
+          })}
+          <circle cx={x} cy={wy} r={rimR / 4} fill="#3a4049" />
         </g>
       ))}
       {wings && (
-        <g className={`polo-wing ${flap ? 'is-flapping' : ''}`} style={{ transformOrigin: `${px}px ${py}px` }}>
-          <path d={P.WING} fill={C.wing} stroke="rgba(24,34,58,0.35)" strokeWidth="1" />
-          <path d={P.WING_FEATHERS} fill="none" stroke={C.feather} strokeWidth="1.2" strokeLinecap="round" />
+        <g className={`polo-wing ${flap ? "is-flapping" : ""}`} style={{ transformOrigin: `${px}px ${py}px` }}>
+          <path d={art.WING} fill={C.wing} stroke="rgba(24,34,58,0.35)" strokeWidth="1" />
+          <path d={art.WING_FEATHERS} fill="none" stroke={C.feather} strokeWidth="1.2" strokeLinecap="round" />
         </g>
       )}
     </svg>

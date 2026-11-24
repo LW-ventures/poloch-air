@@ -1,30 +1,35 @@
-// Vektorgrafik des Poloch: generischer schwarzer Kleinwagen (kurzes Heck, steile Heckklappe) von der Seite,
-// Front rechts, optional mit Flügeln.
+// Vektorgrafik des Poloch: schwarzer Kleinwagen im Seitenprofil eines VW Polo (6R), nach Foto
+// abgezeichnet und gespiegelt (Front rechts), ohne Logo. Optional mit Flügeln.
 // Reine Strings, damit dieselben Pfade in React UND im Icon-Generator (scripts/make-icon.mjs) landen.
 // viewBox: 0 0 300 130 (Auto), mit Flügeln: -20 -80 330 210
 
+// Karosserie: kurzes, rundes Heck mit Dachspoiler, flache Haube, Radläufe mit Abstand zum Reifen
 export const BODY =
-  'M18 92 L16 66 Q16 58 22 54 L36 28 Q40 20 52 19 L158 15 Q168 15 176 22 L214 54 L264 60 Q288 64 290 76 L290 92 ' +
-  'L258 92 A23 23 0 0 0 212 92 L93 92 A23 23 0 0 0 47 92 Z';
-// dicke C-Säule + kleines hinteres Seitenfenster = Kleinwagen statt Kombi
-export const WINDOW_REAR = 'M70 26 L97 25 L97 52 L58 52 Z';
-export const WINDOW_FRONT = 'M103 24 L160 23 Q167 23 172 29 L199 52 L103 52 Z';
-export const GLARE = 'M108 27 L122 27 L110 50 L103 50 Z M74 29 L84 28 L72 50 L64 50 Z';
-export const SHEEN = 'M54 22 L158 18 Q166 18 172 23';
-export const HEADLIGHT = 'M272 64 L287 68 L287 74 L276 72 Z';
-export const TAILLIGHT = 'M17 58 L26 54 L25 70 L16 71 Z';
-export const MIRROR = 'M193 48 L203 45 L205 52 L196 53 Z';
-export const DOOR = 'M150 55 L150 88 M100 55 L100 88';
-export const HANDLE = [126, 58];
-export const SKIRT = 'M96 86 L208 86';
-export const WHEELS = [70, 235];
+  'M16 94.8 L12 82 L12.6 62.5 Q13 48 17.6 42.8 Q21 30 27.5 24.5 L43.5 12.4 Q47 9.5 52.8 9 L97.8 7.6 L137.2 9.5 ' +
+  'Q160 11 168.2 14.1 L218.8 39.4 Q236 43 252.6 47 L279.3 55.4 Q288 58 289.2 62.5 Q292 67 292 73.7 L291.4 94.8 ' +
+  'L268 94.8 L266.6 92 A26.7 26.7 0 0 0 213.2 92 L211.8 96 L81 96 L79.5 92 A26.7 26.7 0 0 0 26.1 92 L24.7 94.8 Z';
+// Hintertür-Fenster + kleines Dreiecksfenster in der C-Säule (typisch Polo 5-Türer)
+export const WINDOW_REAR =
+  'M122.6 13.8 L76 14.6 L68.5 40 L122.6 40.8 Z M70.4 16.2 L55.5 22.8 Q52.5 28 53.2 33.8 L64.8 34.3 Z';
+export const WINDOW_FRONT = 'M190 41.3 L167.6 16.9 Q150 14 130.2 13.8 L130.2 41.3 Z';
+export const GLARE = 'M136 16 L148 15.5 L137 39 L131 39 Z M110 15 L119 15 L110 39 L104 39 Z';
+export const SHEEN = 'M53 11.5 L137 12 Q158 13 166 16.5';
+export const HEADLIGHT = 'M268 57.5 L285 61.5 Q289 63.5 288.5 67.5 L271 66.5 Z';
+export const TAILLIGHT = 'M18 41.5 L30.5 39.5 L32.5 50 L19.5 57.5 Z';
+export const MIRROR = 'M199 37.5 L210 35.5 L212.5 43.5 L202 45.5 Z';
+export const DOOR = 'M130.6 42.5 L130.6 93 M210 43 Q207 70 209 88 M69 41 Q73 66 80 86';
+export const HANDLES = [[134, 52.5], [69.5, 49.5]];
+export const SKIRT = 'M81 91 L211 91';
+export const WHEELS = [52.8, 239.9];
 export const WHEEL_Y = 92;
+export const WHEEL_R = 23;
+export const RIM_R = 15.5;
 
 // Riss in der vorderen Seitenscheibe
-export const CRACK_POINT = [150, 40];
+export const CRACK_POINT = [158, 28];
 export const CRACK =
-  'M150 40 L136 31 M150 40 L166 30 M150 40 L170 46 M150 40 L131 45 M150 40 L146 50 M150 40 L157 28 M150 40 L161 50 ' +
-  'M143 36 L156 34 L162 42 L152 47 L140 43 Z';
+  'M158 28 L144 19 M158 28 L168 19.5 M158 28 L180 34 M158 28 L139 33 M158 28 L154 38 M158 28 L162 16.5 M158 28 L169 38 ' +
+  'M151 24 L164 22 L170 30 L160 35 L148 31 Z';
 
 // Flügel, am Dach (121,17) angesetzt, nach hinten-oben geschwungen
 export const WING =

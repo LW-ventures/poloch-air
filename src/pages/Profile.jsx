@@ -196,7 +196,7 @@ function CarForm({ car }) {
       </div>
       <div className="form-row">
         <label className="field">
-          <span>Verbrauch (2–20 l/100km)</span>
+          <span>Verbrauch (2–25 l/100km)</span>
           <input inputMode="decimal" value={f.consumption} onChange={set('consumption')} placeholder="6,2" maxLength={5} required />
         </label>
         <label className="field">
@@ -265,7 +265,7 @@ function Routes({ state }) {
             </label>
             <label className="field field-km">
               <span>km</span>
-              <input inputMode="decimal" value={edit.km} onChange={(e) => setEdit({ ...edit, km: e.target.value })} placeholder="1–500" maxLength={5} required />
+              <input inputMode="decimal" value={edit.km} onChange={(e) => setEdit({ ...edit, km: e.target.value })} placeholder="1–5000" maxLength={6} required />
             </label>
           </div>
           <div className="row-actions">

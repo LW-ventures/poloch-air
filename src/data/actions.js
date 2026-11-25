@@ -26,10 +26,9 @@ export function createFlights(state, { driverId, carId, legs, seats, note }) {
   if ((note || '').length > LIMITS.note) fail(`Gate-Info bitte kürzer als ${LIMITS.note} Zeichen.`);
   const today = new Date();
   const minDate = isoDate(today);
-  const maxDate = isoDate(new Date(today.getFullYear(), today.getMonth(), today.getDate() + LIMITS.daysAhead));
   const flights = legs.map((leg) => {
     if (!leg.date || !/^([01][0-9]|2[0-3]):[0-5][0-9]$/.test(leg.time || '')) fail('Datum und Uhrzeit fehlen oder stimmen nicht.');
-    if (leg.date < minDate || leg.date > maxDate) fail(`Flüge gehen von heute bis ${LIMITS.daysAhead} Tage im Voraus.`);
+    if (leg.date < minDate) fail('Flüge können nicht in der Vergangenheit liegen.');
     if (!inRange(Number(leg.km), LIMITS.km)) fail(`Strecke bitte zwischen ${LIMITS.km.min} und ${LIMITS.km.max} km.`);
     if (!CODE_RE.test(String(leg.fromCode || '').toUpperCase()) || !CODE_RE.test(String(leg.toCode || '').toUpperCase())) fail('Flughafencodes brauchen 3 Buchstaben oder Ziffern.');
     if ((leg.fromName || '').length > LIMITS.text || (leg.toName || '').length > LIMITS.text) fail(`Ortsnamen bitte kürzer als ${LIMITS.text} Zeichen.`);

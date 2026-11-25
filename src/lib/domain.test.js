@@ -98,10 +98,11 @@ describe('Grenzen', () => {
     let s = setup();
     expect(() => A.saveCar(s, { userId: BEN, car: { name: 'X', consumption: 99, seats: 4, fuelPrice: 1.8 } })).toThrow(/Verbrauch/);
     expect(() => A.saveCar(s, { userId: BEN, car: { name: 'X', consumption: 6, seats: 4, fuelPrice: 10000 } })).toThrow(/Spritpreis/);
-    expect(() => A.saveRoute(s, { userId: BEN, route: { fromCode: 'AAA', fromName: 'a', toCode: 'BBB', toName: 'b', km: 5000 } })).toThrow(/500 km/);
+    expect(() => A.saveRoute(s, { userId: BEN, route: { fromCode: 'AAA', fromName: 'a', toCode: 'BBB', toName: 'b', km: 9000 } })).toThrow(/5000 km/);
     expect(() => A.addPayment(s, { fromId: CHRIS, toId: BEN, cents: 1000000, byUserId: CHRIS })).toThrow(/200/);
-    const far = new Date(); far.setDate(far.getDate() + 400);
-    expect(() => A.createFlights(s, { driverId: BEN, carId: s.cars[0].id, legs: [{ date: D.isoDate(far), time: '07:15', km: 10, fromCode: 'AAA', toCode: 'BBB' }], seats: 4 })).toThrow(/60 Tage/);
+    expect(() => A.createFlights(s, { driverId: BEN, carId: s.cars[0].id, legs: [{ date: '2020-01-01', time: '07:15', km: 10, fromCode: 'AAA', toCode: 'BBB' }], seats: 4 })).toThrow(/Vergangenheit/);
+    // Urlaubsfahrt weit in der Zukunft und über 1000 km ist erlaubt
+    expect(() => A.createFlights(s, { driverId: BEN, carId: s.cars[0].id, legs: [{ date: '2067-06-01', time: '07:15', km: 1450, fromCode: 'HOM', toCode: 'ITA' }], seats: 4 })).not.toThrow();
   });
 });
 

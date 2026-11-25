@@ -50,7 +50,7 @@ function LegEditor({ label, leg, setLeg, routes }) {
           </label>
           <label className="field field-km">
             <span>km</span>
-            <input type="number" inputMode="decimal" min="1" max="500" step="0.1" placeholder="1–500" value={leg.km} onChange={(e) => setLeg({ ...leg, km: e.target.value })} />
+            <input type="number" inputMode="decimal" min="1" max="5000" step="0.1" placeholder="1–5000" value={leg.km} onChange={(e) => setLeg({ ...leg, km: e.target.value })} />
           </label>
         </div>
       )}
@@ -150,7 +150,7 @@ export default function NewFlight({ state, user, now }) {
       <form className="form" onSubmit={submit}>
         <label className="field">
           <span>Datum</span>
-          <input type="date" value={date} min={isoDate(now)} max={isoDate(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 60))} onChange={(e) => setDate(e.target.value)} required />
+          <input type="date" value={date} min={isoDate(now)} onChange={(e) => setDate(e.target.value)} required />
         </label>
 
         <LegEditor label="Hinflug" leg={out} setLeg={setOut} routes={routes} />

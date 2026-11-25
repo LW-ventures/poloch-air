@@ -1,7 +1,7 @@
 import { seatsForCount, seatInfo, activeBookings } from '../lib/domain.js';
 import { nameOf } from './ui.jsx';
 
-// Draufsicht auf den Poloch, Fahrtrichtung oben. Linkslenker: Pilot sitzt vorne links (1A).
+// Draufsicht auf das Poloch, Fahrtrichtung oben. Linkslenker: Pilot sitzt vorne links (1A).
 const LAYOUT = [
   ['1A', null, '1B'],
   ['2A', '2B', '2C'],

@@ -56,7 +56,7 @@ export default function Admin({ state }) {
                     if (await attempt(() => api.renameUser(u.id, editing.name), 'Umbenannt.')) setEditing(null);
                   }}
                 >
-                  <input value={editing.name} onChange={(e) => setEditing({ ...editing, name: e.target.value })} autoFocus />
+                  <input value={editing.name} maxLength={20} onChange={(e) => setEditing({ ...editing, name: e.target.value })} autoFocus />
                   <button className="chip chip-yes" type="submit">ok</button>
                 </form>
               ) : (
@@ -76,7 +76,7 @@ export default function Admin({ state }) {
         </ul>
         {MODE === 'test' ? (
           <form className="inline-form" onSubmit={add}>
-            <input placeholder="Neue Person" value={name} onChange={(e) => setName(e.target.value)} />
+            <input placeholder="Neue Person" maxLength={20} value={name} onChange={(e) => setName(e.target.value)} />
             <button className="btn btn-primary" type="submit" disabled={!name.trim()}>Hinzufügen</button>
           </form>
         ) : (

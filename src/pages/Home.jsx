@@ -61,7 +61,7 @@ export default function Home({ state, user, now }) {
       <Section title="Deine Boarding Passes">
         {!first && (
           <Empty>
-            Kein Ticket gebucht. Schau auf die Abflugtafel. Vielleicht hebt der Poloch bald ab.
+            Kein Ticket gebucht. Schau auf die Abflugtafel. Vielleicht hebt das Poloch bald ab.
           </Empty>
         )}
         {first && (

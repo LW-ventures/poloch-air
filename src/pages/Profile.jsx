@@ -176,8 +176,8 @@ function CarForm({ car }) {
           <span className="pf-label">Grad getankt?</span>
           <div className="fuel-row">
             <label className="field field-grow">
-              <span>Spritpreis €/l</span>
-              <input inputMode="decimal" value={f.fuelPrice} onChange={set('fuelPrice')} placeholder="1,79" />
+              <span>Spritpreis €/l (1,00–3,50)</span>
+              <input inputMode="decimal" value={f.fuelPrice} onChange={set('fuelPrice')} placeholder="1,79" maxLength={5} />
             </label>
             <button className="btn btn-primary" type="submit">Preis speichern</button>
           </div>
@@ -187,17 +187,17 @@ function CarForm({ car }) {
       <div className="form-row">
         <label className="field">
           <span>Auto</span>
-          <input value={f.name} onChange={set('name')} placeholder="VW Polo" required />
+          <input value={f.name} onChange={set('name')} placeholder="VW Polo" maxLength={30} required />
         </label>
         <label className="field">
           <span>Spitzname</span>
-          <input value={f.nickname} onChange={set('nickname')} placeholder="Poloch" />
+          <input value={f.nickname} onChange={set('nickname')} placeholder="Poloch" maxLength={30} />
         </label>
       </div>
       <div className="form-row">
         <label className="field">
-          <span>Verbrauch l/100 km</span>
-          <input inputMode="decimal" value={f.consumption} onChange={set('consumption')} placeholder="6,2" required />
+          <span>Verbrauch (2–20 l/100km)</span>
+          <input inputMode="decimal" value={f.consumption} onChange={set('consumption')} placeholder="6,2" maxLength={5} required />
         </label>
         <label className="field">
           <span>Freie Plätze</span>
@@ -210,8 +210,8 @@ function CarForm({ car }) {
       </div>
       {!car && (
         <label className="field">
-          <span>Spritpreis €/l</span>
-          <input inputMode="decimal" value={f.fuelPrice} onChange={set('fuelPrice')} placeholder="1,79" required />
+          <span>Spritpreis €/l (1,00–3,50)</span>
+          <input inputMode="decimal" value={f.fuelPrice} onChange={set('fuelPrice')} placeholder="1,79" maxLength={5} required />
         </label>
       )}
       <button className="btn btn-block" type="submit">{car ? 'Auto speichern' : 'Auto anlegen'}</button>
@@ -253,7 +253,7 @@ function Routes({ state }) {
             </label>
             <label className="field">
               <span>Ort</span>
-              <input value={edit.fromName} onChange={(e) => setEdit({ ...edit, fromName: e.target.value })} placeholder="Zuhause" required />
+              <input value={edit.fromName} onChange={(e) => setEdit({ ...edit, fromName: e.target.value })} placeholder="Zuhause" maxLength={30} required />
             </label>
             <label className="field field-code">
               <span>Nach</span>
@@ -261,11 +261,11 @@ function Routes({ state }) {
             </label>
             <label className="field">
               <span>Ort</span>
-              <input value={edit.toName} onChange={(e) => setEdit({ ...edit, toName: e.target.value })} placeholder="Arbeit" required />
+              <input value={edit.toName} onChange={(e) => setEdit({ ...edit, toName: e.target.value })} placeholder="Arbeit" maxLength={30} required />
             </label>
             <label className="field field-km">
               <span>km</span>
-              <input inputMode="decimal" value={edit.km} onChange={(e) => setEdit({ ...edit, km: e.target.value })} required />
+              <input inputMode="decimal" value={edit.km} onChange={(e) => setEdit({ ...edit, km: e.target.value })} placeholder="1–500" maxLength={5} required />
             </label>
           </div>
           <div className="row-actions">

@@ -4,7 +4,7 @@ import FlapText from './FlapText.jsx';
 import './splash.css';
 
 export const SPLASHES = [
-  { id: 'scheibe', name: 'Scheibe', desc: 'Der Poloch steht da, die Scheibe fliegt, du fliegst durch.' },
+  { id: 'scheibe', name: 'Scheibe', desc: 'Das Poloch steht da, die Scheibe fliegt, du fliegst durch.' },
   { id: 'airline', name: 'Airline', desc: 'Schriftzug als Fallblatt, das Flügel-Auto fliegt im Bogen dazu.' },
   { id: 'none', name: 'Aus', desc: 'Direkt in die App.' },
 ];

@@ -54,7 +54,7 @@ export function PoloGlyph({ size = 24, className = '', title }) {
   );
 }
 
-// Der Poloch. wings: Flügel dran; flap: Flügel schlagen; spin: Räder drehen; crack: Riss in der Scheibe
+// Das Poloch. wings: Flügel dran; flap: Flügel schlagen; spin: Räder drehen; crack: Riss in der Scheibe
 // art: alternative Zeichnung (nur für Vergleiche), Standard ist poloArt.js
 export default function Polo({ wings = false, flap = false, spin = false, crack = false, className = "", title, art = P }) {
   const C = P.COLORS;

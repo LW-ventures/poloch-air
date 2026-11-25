@@ -3,6 +3,10 @@ import * as D from './domain.js';
 import * as A from '../data/actions.js';
 import { emptyState } from '../data/seed.js';
 
+// Flüge dürfen nur bis 60 Tage im Voraus angelegt werden -> Datum relativ zu heute
+const d = new Date(); d.setDate(d.getDate() + 7);
+const SOON = D.isoDate(d);
+
 const BEN = 'u-ben';
 const CHRIS = 'u-chris';
 const ANNA = 'u-anna';
@@ -31,7 +35,7 @@ describe('Kosten', () => {
   it('teilt durch alle Insassen inkl. Pilot, nur abgerissene zählen', () => {
     let s = setup();
     let f;
-    [s, f] = flightAt(s, '2099-01-01', '07:15');
+    [s, f] = flightAt(s, SOON, '07:15');
     [s] = A.book(s, { flightId: f.id, userId: CHRIS, seat: '1B' });
     [s] = A.book(s, { flightId: f.id, userId: ANNA, seat: '2A' });
     expect(D.shareCents(s, f)).toBe(0); // noch keiner abgerissen
@@ -45,7 +49,7 @@ describe('Kosten', () => {
   it('Pilot kann nachträglich korrigieren', () => {
     let s = setup();
     let f;
-    [s, f] = flightAt(s, '2099-01-01', '07:15');
+    [s, f] = flightAt(s, SOON, '07:15');
     let b;
     [s, b] = A.book(s, { flightId: f.id, userId: CHRIS, seat: '1B' });
     s = A.setVerdict(s, { bookingId: b.id, userId: BEN, verdict: 'flown' });
@@ -59,7 +63,7 @@ describe('Kontostand', () => {
   it('Zahlungen zählen erst nach Bestätigung, Guthaben möglich', () => {
     let s = setup();
     let f;
-    [s, f] = flightAt(s, '2099-01-01', '07:15');
+    [s, f] = flightAt(s, SOON, '07:15');
     let b;
     [s, b] = A.book(s, { flightId: f.id, userId: CHRIS, seat: '1B' });
     s = A.setVerdict(s, { bookingId: b.id, userId: BEN, verdict: 'flown' });
@@ -89,11 +93,23 @@ describe('Kontostand', () => {
   });
 });
 
+describe('Grenzen', () => {
+  it('lehnt unsinnige Werte ab', () => {
+    let s = setup();
+    expect(() => A.saveCar(s, { userId: BEN, car: { name: 'X', consumption: 99, seats: 4, fuelPrice: 1.8 } })).toThrow(/Verbrauch/);
+    expect(() => A.saveCar(s, { userId: BEN, car: { name: 'X', consumption: 6, seats: 4, fuelPrice: 10000 } })).toThrow(/Spritpreis/);
+    expect(() => A.saveRoute(s, { userId: BEN, route: { fromCode: 'AAA', fromName: 'a', toCode: 'BBB', toName: 'b', km: 5000 } })).toThrow(/500 km/);
+    expect(() => A.addPayment(s, { fromId: CHRIS, toId: BEN, cents: 1000000, byUserId: CHRIS })).toThrow(/200/);
+    const far = new Date(); far.setDate(far.getDate() + 400);
+    expect(() => A.createFlights(s, { driverId: BEN, carId: s.cars[0].id, legs: [{ date: D.isoDate(far), time: '07:15', km: 10, fromCode: 'AAA', toCode: 'BBB' }], seats: 4 })).toThrow(/60 Tage/);
+  });
+});
+
 describe('Regeln', () => {
   it('Sitz nur einmal vergeben, Pilot bucht nicht', () => {
     let s = setup();
     let f;
-    [s, f] = flightAt(s, '2099-01-01', '07:15');
+    [s, f] = flightAt(s, SOON, '07:15');
     [s] = A.book(s, { flightId: f.id, userId: CHRIS, seat: '1B' });
     expect(() => A.book(s, { flightId: f.id, userId: ANNA, seat: '1B' })).toThrow(/weg/);
     expect(() => A.book(s, { flightId: f.id, userId: BEN, seat: '2A' })).toThrow(/Pilot/);

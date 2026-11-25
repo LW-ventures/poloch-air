@@ -174,9 +174,9 @@ function PaymentSheet({ state, user, sheet, onClose }) {
           </select>
         </label>
         <label className="field">
-          <span>Betrag in €</span>
+          <span>Betrag in € (bis 200)</span>
           <div className="amount-row">
-            <input className="amount" type="text" inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} required />
+            <input className="amount" type="text" inputMode="decimal" maxLength={6} value={amount} onChange={(e) => setAmount(e.target.value)} required />
             {[2, 5, 10, 20].map((v) => (
               <button type="button" key={v} className={`chip ${String(v) === amount ? 'chip-on' : ''}`} onClick={() => setAmount(String(v))}>
                 {v} €

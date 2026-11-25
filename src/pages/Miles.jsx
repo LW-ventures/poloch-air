@@ -38,7 +38,7 @@ export default function Miles({ state, user, now }) {
             <small>Noch {nt.min - mine.total} Flüge bis {nt.name}</small>
           </div>
         ) : (
-          <div className="miles-progress"><small>Höchster Status. Der Poloch kennt deinen Namen.</small></div>
+          <div className="miles-progress"><small>Höchster Status. Das Poloch kennt deinen Namen.</small></div>
         )}
       </div>
 

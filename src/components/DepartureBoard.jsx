@@ -31,7 +31,7 @@ export default function DepartureBoard({ state, user, now, limit = 8 }) {
         <span>Nach</span>
         <span>Status</span>
       </div>
-      {flights.length === 0 && <div className="board-empty">Keine Abflüge geplant. Der Poloch schläft.</div>}
+      {flights.length === 0 && <div className="board-empty">Keine Abflüge geplant. Das Poloch schläft.</div>}
       {flights.map((f, i) => {
         const st = flightStatus(state, f, now);
         const mine = activeBookings(state, f.id).some((b) => b.userId === user.id);
